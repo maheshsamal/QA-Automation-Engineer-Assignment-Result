@@ -1,0 +1,46 @@
+Q1:1. Automate any web login flow using Selenium
+ANS:
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+public class LoginAutomation {
+@Test
+public void login() {
+System.setProperty("webdriver.chrome.driver", "path of driver");
+WebDriver driver=new ChromeDriver();
+driver.manage().window().maximize();
+driver.get("https://www.browserstack.com/users/sign_in");
+WebElement username=driver.findElement(By.id("user_email_Login"));
+WebElement password=driver.findElement(By.id("user_password"));
+WebElement login=driver.findElement(By.name("commit"));
+username.sendKeys("abc@gmail.com");
+password.sendKeys("your_password");
+login.click();
+String actualUrl="https://live.browserstack.com/dashboard";
+String expectedUrl= driver.getCurrentUrl();
+Assert.assertEquals(expectedUrl,actualUrl);
+
+Q2:2. Automate any POST API
+
+  Scenario: Verify the address of a client.
+    When I set JSON request body to:
+    """
+    {
+      "Address1": "Park Street",
+      "Address2":  "MG Road",
+      "City": "Bangalore",
+      "Country": "India",
+      "Zip": 560002
+    }
+    """
+    And  I send a POST request to "http://sample.com/Create an address/posts"
+    Then the response status should be "201"
+    And  the JSON response should have "address1" of type string and value "Park Street"
+    And  the JSON response should have "address2" of type string and value "MG Road"
+    And  the JSON response should have "City" of type string and value "Bangalore"
+    And  the JSON response should have "Country" of type string and value "India
+    And  the JSON response should have "Zip" of type numeric and value "560002"
+}
